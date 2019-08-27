@@ -1,0 +1,34 @@
+parameters = {
+    #default
+    'objective': 'reg:logistic',
+    'learning_rate': 0.1,
+    'silent': 1,
+    "nthread": 4,
+    "random_seed": 1,
+    "eval_metric": 'auc',
+}
+
+splits = 4
+folds = splits
+num_rounds = 1000
+
+xgb_train = xgb.DMatrix(train, np.array(y_train), feature_names=train.columns)
+results = xgb.cv(parameters, xgb_train, num_boost_round=num_rounds,early_stopping_rounds=10, nfold=folds, verbose_eval=0)
+results.iloc[-1]
+
+from sklearn.model_selection import GridSearchCV
+
+num_rounds = len(results)-1
+xgbc = xgb.XGBRFClassifier(n_estimators=num_rounds)
+
+%%time
+add_params = {'max_depth':[3,6,8,10],
+              'max_leaves':[10,20,30],
+              'subsample':[0.3,0.5,0.9],
+              'reg_lambda':[0.5,1,5,10]
+             }
+new_params = {**{k:[v] for k,v in parameters.items()},**add_params}
+grid = GridSearchCV(xgbc, new_params, n_jobs=-1,verbose=1)
+grid.fit(X=train,y=np.array(y_train))
+
+grid.error_score
