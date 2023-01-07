@@ -15,6 +15,7 @@
 1. LightGBM in details
 1. CatBoost in details
 1. XGBoost vs LightGBM vs CatBoost
+1. Ensemble methods: efficient hyperparameter tuning
 
 
 ### Week 3
@@ -25,6 +26,7 @@
 1. RNN
 1. LSTM
 1. GRU
+1. Pytorch framework
 
 ### Week 4
 1. Latent semantic analysis
@@ -32,6 +34,7 @@
 1. Seqence2sequence
 1. Attention mechanism
 1. Dialog systems
+1. BERT model for NER task
 
 ### Week 5
 1. Conditional random field
